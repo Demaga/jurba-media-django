@@ -7,9 +7,11 @@ from martor.models import MartorField
 class Article(models.Model):
     title = models.CharField(max_length=150)
     subtitle = models.CharField(max_length=150)
-    image = models.ImageField(max_length=150)
+    image = models.ImageField(max_length=150, upload_to="/articles")
     promo = models.BooleanField(default=False)
-    promo_image = models.ImageField(max_length=150, null=True, blank=True)
+    promo_image = models.ImageField(
+        max_length=150, null=True, blank=True, upload_to="/articles"
+    )
     slug = models.SlugField(max_length=150, unique=True)
     published = models.BooleanField(default=False)
     markdown_body = MartorField()

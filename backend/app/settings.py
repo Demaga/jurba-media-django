@@ -143,8 +143,9 @@ AWS_S3_OBJECT_PARAMETERS = {
     "CacheControl": "max-age=86400",
 }
 
-MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/media/"
-MEDIA_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+AWS_LOCATION = "static"
+MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/"
+DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 
 
 # Choices are: "semantic", "bootstrap"
@@ -220,7 +221,7 @@ MARTOR_MARKDOWN_BASE_EMOJI_URL = (
     "https://github.githubassets.com/images/icons/emoji/"  # default from github
 )
 
-# MARTOR_MARKDOWN_BASE_MENTION_URL = 'https://python.web.id/author/'                                      # please change this to your domain
+# MARTOR_MARKDOWN_BASE_MENTION_URL = 'https://python.web.id/author/' # please change this to your domain
 
 # URL schemes that are allowed within links
 ALLOWED_URL_SCHEMES = [
