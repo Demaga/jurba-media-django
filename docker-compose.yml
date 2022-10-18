@@ -1,0 +1,22 @@
+services:
+  backend:
+    working_dir: /app/backend
+    build: ./backend
+    command: python3.10 manage.py runserver 0.0.0.0:8000
+    ports:
+      - 8000:8000
+    volumes:
+      - ./backend:/app/backend
+    restart: on-failure
+  frontend:
+    working_dir: /app/frontend
+    image: node:18-alpine
+    build: ./frontend
+    command: npm start
+    ports:
+      - 3000:3000
+    restart: on-failure
+    volumes:
+      - ./frontend:/app/frontend
+volumes:
+  staticbuild:
