@@ -1,5 +1,5 @@
-from article.models import Article
-from article.serializers import ArticleSerializer
+from article.models import Article, NewsArticle
+from article.serializers import ArticleSerializer, NewsArticleSerializer
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -25,3 +25,13 @@ class ArticleViewSet(viewsets.ModelViewSet):
 
         serializer = self.get_serializer(articles, many=True)
         return Response(serializer.data)
+
+
+class NewsArticleViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows news articles to be viewed or edited.
+    """
+
+    queryset = NewsArticle.objects.all().order_by("-created_at")
+    serializer_class = NewsArticleSerializer
+    # permission_classes = [permissions.IsAuthenticated]

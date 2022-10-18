@@ -1,10 +1,11 @@
+from app.models import Timestampable
 from django.contrib.auth.models import User
 from django.db import models
 from martor.models import MartorField
 
 
 # Create your models here.
-class Article(models.Model):
+class Article(Timestampable):
     title = models.CharField(max_length=150)
     subtitle = models.CharField(max_length=150)
     image = models.ImageField(max_length=150, upload_to="./articles")
@@ -18,5 +19,14 @@ class Article(models.Model):
 
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+
+class NewsArticle(Timestampable):
+    title = models.CharField(max_length=150)
+    image = models.ImageField(
+        max_length=150, upload_to="./news_articles", null=True, blank=True
+    )
+    source = models.URLField()
+    source_name = models.CharField(max_length=150)
+    slug = models.SlugField(max_length=150, unique=True)
+
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)

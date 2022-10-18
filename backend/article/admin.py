@@ -1,4 +1,4 @@
-from article.models import Article
+from article.models import Article, NewsArticle
 from django.contrib import admin
 
 # Register your models here.
@@ -35,4 +35,27 @@ class ArtcicleAdmin(admin.ModelAdmin):
         return format_html(html.format(url=obj.image.url, width=width, height=height))
 
 
+class NewsArtcicleAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "title",
+        "author",
+        "created_at",
+        "thumbnail",
+    )
+
+    list_filter = (
+        "author",
+        "created_at",
+    )
+
+    autocomplete_fields = ("author",)
+
+    def thumbnail(self, obj):
+        width, height = 150, 200
+        html = '<img src="{url}" width="{width}" height={height} />'
+        return format_html(html.format(url=obj.image.url, width=width, height=height))
+
+
 admin.site.register(Article, ArtcicleAdmin)
+admin.site.register(NewsArticle, NewsArtcicleAdmin)
