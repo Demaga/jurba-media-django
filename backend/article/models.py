@@ -1,10 +1,19 @@
 from app.models import Timestampable
+from colorfield.fields import ColorField
 from django.contrib.auth.models import User
 from django.db import models
 from martor.models import MartorField
 
 
-# Create your models here.
+class Tag(models.Model):
+    name = models.CharField(max_length=10)
+    bg_color = ColorField(default="#1e488f")
+    text_color = ColorField(default="#FFFFFF")
+
+    def __str__(self):
+        return self.name
+
+
 class Article(Timestampable):
     title = models.CharField(max_length=150)
     subtitle = models.CharField(max_length=150)
@@ -18,6 +27,7 @@ class Article(Timestampable):
     markdown_body = MartorField()
 
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    tags = models.ManyToManyField(Tag, blank=True)
 
 
 class NewsArticle(Timestampable):

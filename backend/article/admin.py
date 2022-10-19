@@ -1,10 +1,14 @@
-from article.models import Article, NewsArticle
+from article.models import Article, NewsArticle, Tag
 from django.contrib import admin
 
 # Register your models here.
 from django.db import models
 from django.utils.html import format_html
 from martor.widgets import AdminMartorWidget
+
+
+class TagAdmin(admin.ModelAdmin):
+    ...
 
 
 class ArtcicleAdmin(admin.ModelAdmin):
@@ -18,10 +22,7 @@ class ArtcicleAdmin(admin.ModelAdmin):
         "published",
     )
 
-    list_filter = (
-        "author",
-        "published",
-    )
+    list_filter = ("author", "published", "tags")
 
     autocomplete_fields = ("author",)
 
@@ -57,5 +58,6 @@ class NewsArtcicleAdmin(admin.ModelAdmin):
         return format_html(html.format(url=obj.image.url, width=width, height=height))
 
 
+admin.site.register(Tag, TagAdmin)
 admin.site.register(Article, ArtcicleAdmin)
 admin.site.register(NewsArticle, NewsArtcicleAdmin)
